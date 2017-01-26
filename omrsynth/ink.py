@@ -1,5 +1,5 @@
 """
-This module should be simulating ink layer of music sheets...
+This module should simulate ink layer of music sheets...
 TODO: Print vs. handwritten ink; degradation parameters and simulation.
 """
 

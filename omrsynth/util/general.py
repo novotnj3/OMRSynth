@@ -25,14 +25,13 @@ def clip_image(image):
     np.clip(image, 0.0, 1.0, out=image)
 
 
-def grayscale_to_3_channels(gs_image):
+def repeat_to_3_channels(image):
     """
-    Converts an grayscale image to three channels
-    by copying its values along dimensions.
-    :param gs_image: An image to be converted.
-    :return: 3-channel image constructed by copying values along dimension.
+    Converts an image to three channels by copying its values along dimensions.
+    :param image: An image to be converted.
+    :return: 3-channel image constructed by copying values along 3rd axis.
     """
-    return np.repeat(gs_image[:, :, np.newaxis], 3, axis=2)
+    return np.repeat(image[:, :, np.newaxis], 3, axis=2)
 
 
 def linear_transform(image, x_min=None, x_max=None, y_min=0.0, y_max=1.0):
@@ -48,14 +47,14 @@ def linear_transform(image, x_min=None, x_max=None, y_min=0.0, y_max=1.0):
     Please see TODO (href to a graph with explanation).
     """
 
-    # Handle default cases:
+    # Handle default cases
     if x_min is None:
         x_min = image.min()
 
     if x_max is None:
         x_max = image.max()
 
-    # Transform the image and ensure the valid values range.
+    # Transform the image and ensure the valid values range
     transformed = y_min + (image - x_min) * ((y_max - y_min) / (x_max - x_min))
     clip_image(transformed)
 

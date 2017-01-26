@@ -19,7 +19,7 @@ def normal(im_a, im_b, alpha=0.5):
     :return: (1 - alpha) * im_b + alpha * im_a
     """
 
-    # Alpha must be in the range between 0.0 and 1.0:
+    # Alpha must be in the range between 0.0 and 1.0
     alpha = general.clip_number(alpha)
     return (1 - alpha) * im_b + alpha * im_a
 
@@ -97,7 +97,8 @@ def soft_light(im_a, im_b, alpha=1.0):
     :return: (1 - im_b) .* multiply(im_a, im_b) + im_b .* screen(im_a, im_b)
     """
 
-    im_soft = (1 - im_b) * multiply(im_a, im_b) + np.multiply(im_b, screen(im_a, im_b))
+    screen_a_b = screen(im_a, im_b)
+    im_soft = (1 - im_b) * multiply(im_a, im_b) + np.multiply(im_b, screen_a_b)
     return normal(im_soft, im_b, alpha)
 
 
@@ -136,7 +137,7 @@ def addition(im_a, im_b, alpha=1.0):
     :return: im_a + im_b, out of range values are clipped
     """
 
-    # Add values and ensure the valid range:
+    # Add values and ensure the valid range
     im_add = im_a + im_b
     general.clip_image(im_add)
 
@@ -152,7 +153,7 @@ def subtraction(im_a, im_b, alpha=1.0):
     :return: im_b - im_a, out of range values are clipped
     """
 
-    # Subtract values and ensure the valid range:
+    # Subtract values and ensure the valid range
     im_sub = im_b - im_a
     general.clip_image(im_sub)
 
@@ -181,11 +182,11 @@ def divide(im_a, im_b, alpha=1.0):
     :return: im_b ./ im_a, out of range values are clipped
     """
 
-    # Ignore divisions by zero and divide the images:
+    # Ignore divisions by zero and divide the images
     with np.errstate(divide='ignore'):
         im_mul = np.divide(im_b, im_a)
 
-    # Correct NaN values:
+    # Correct NaN values
     im_mul[np.isnan(im_mul)] = 0
     general.clip_image(im_mul)
 
@@ -201,11 +202,11 @@ def dodge(im_a, im_b, alpha=1.0):
     :return: im_b ./ (1 - im_a), out of range values are clipped
     """
 
-    # Ignore divisions by zero and divide the images:
+    # Ignore divisions by zero and divide the images
     with np.errstate(divide='ignore'):
         im_dodge = np.divide(im_b, 1 - im_a)
 
-    # Correct NaN values:
+    # Correct NaN values
     im_dodge[np.isnan(im_dodge)] = 0
     general.clip_image(im_dodge)
 
@@ -221,11 +222,11 @@ def burn(im_a, im_b, alpha=1.0):
     :return: 1 - (1 - im_b) ./ im_a, out of range values are clipped
     """
 
-    # Ignore divisions by zero and divide the images:
+    # Ignore divisions by zero and divide the images
     with np.errstate(divide='ignore'):
         im_burn = 1 - np.divide(1 - im_b, im_a)
 
-    # Correct NaN values:
+    # Correct NaN values
     im_burn[np.isnan(im_burn)] = 0
     general.clip_image(im_burn)
 
@@ -238,7 +239,8 @@ def hue(im_a, im_b, alpha=1.0):
     :param im_a: Active image layer (i.e. the foreground layer).
     :param im_b: Background image layer (i.e. the underlying layer).
     :param alpha: Parameter affecting the opacity of active layer.
-    :return: Hue taken from the active layer, saturation and value from the background.
+    :return: Hue taken from the active layer, saturation and value from the
+    background.
     """
 
     im_hue_hsv = skimage.color.rgb2hsv(im_b)
@@ -254,7 +256,8 @@ def saturation(im_a, im_b, alpha=1.0):
     :param im_a: Active image layer (i.e. the foreground layer).
     :param im_b: Background image layer (i.e. the underlying layer).
     :param alpha: Parameter affecting the opacity of active layer.
-    :return: Saturation taken from the active layer, hue and value from the background.
+    :return: Saturation taken from the active layer, hue and value from the
+    background.
     """
 
     im_sat_hsv = skimage.color.rgb2hsv(im_b)
@@ -270,7 +273,8 @@ def value(im_a, im_b, alpha=1.0):
     :param im_a: Active image layer (i.e. the foreground layer).
     :param im_b: Background image layer (i.e. the underlying layer).
     :param alpha: Parameter affecting the opacity of active layer.
-    :return: Value (HSV) taken from the active layer, hue and saturation from the background.
+    :return: Value (HSV) taken from the active layer, hue and saturation from
+    the background.
     """
 
     im_val_hsv = skimage.color.rgb2hsv(im_b)
@@ -286,7 +290,8 @@ def color(im_a, im_b, alpha=1.0):
     :param im_a: Active image layer (i.e. the foreground layer).
     :param im_b: Background image layer (i.e. the underlying layer).
     :param alpha: Parameter affecting the opacity of active layer.
-    :return: Hue and saturation taken from the active layer, value from the background.
+    :return: Hue and saturation taken from the active layer, value from the
+    background.
     """
 
     im_col_hsv = skimage.color.rgb2hsv(im_a)

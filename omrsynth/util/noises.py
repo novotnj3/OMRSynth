@@ -41,7 +41,7 @@ def simplex_noise(shape,
                 persistence=persistence,
                 lacunarity=lacunarity)
 
-            # Mapping [-1.0; 1.0] -> [0.0; 1.0]:
+            # Mapping [-1.0; 1.0] -> [0.0; 1.0]
             noise_image[y, x] = 0.5 * (noise_core + 1)
 
     return noise_image
@@ -81,7 +81,7 @@ def perlin_noise(shape,
                 persistence=persistence,
                 lacunarity=lacunarity)
 
-            # Mapping [-1.0; 1.0] -> [0.0; 1.0]:
+            # Mapping [-1.0; 1.0] -> [0.0; 1.0]
             noise_image[y, x] = 0.5 * (noise_core + 1)
 
     return noise_image
