@@ -66,6 +66,7 @@ def combine(sheet_mask, background, fg_struct=1.0, sat_scale=0.45,
     overlay_final[outer_outline] = (u * overlay_final[outer_outline] ** exp
                                     + v * background[outer_outline])
 
+    overlay_final = np.clip(overlay_final, 0, 1)
     return overlay_final
 
 
