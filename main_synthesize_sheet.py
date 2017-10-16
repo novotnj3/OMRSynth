@@ -12,7 +12,7 @@ from omrsynth.omrsynth import combine
 def parse_args():
     parser = argparse.ArgumentParser('OMRSynth sheet generator')
 
-    parser.add_argument('--input_sheet', type=str, required=True,
+    parser.add_argument('--sheet', type=str, required=True,
                         help='Path to the binary sheet image file.')
     parser.add_argument('--background', type=str, required=True,
                         help='Path to the background image file.')
@@ -53,7 +53,7 @@ def parse_args():
 def main():
     args = parse_args()
 
-    binary_sheet = io.load_binary_float(args.input_sheet)
+    binary_sheet = io.load_binary_float(args.sheet)
     background = io.load_rgb_float(args.background)
     printed = basic_print(binary_sheet, level=args.level, blur_size=args.blur)
     combined = combine(printed, background, fg_struct=args.leak,

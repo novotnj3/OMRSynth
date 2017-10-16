@@ -1,40 +1,37 @@
-#OMR Synthesis Project
+# OMR Synthesis Project
 
-> **WARNING:** This project is still under construction and serves only (temporarily) as a place for prototyping wide range of image synthesis ideas.
+> **WARNING:** This project is still under construction and serves only as a 
+place for prototyping image synthesis ideas.
 
-The main idea is to automatically generate realistic images of music sheets as a part of our OMR benchmark dataset. By the term "realistic" we mean plausibly looking, i.e. we are **not** trying to **accurately simulate physical phenomena** such as a paper microstructure or ink diffusion. Rather, we are targeting to use the means of procedural modeling to achieve the realistic results.
-
-The very first version of this project requires rendered binary images of music scores as an input. (Actually two images --- the first containing only the staff lines and the second with musical symbols. This distinction is important because of handwritten music scores with preprinted staff lines, where the ink should be different.) 
-
-##Layers
-Visual inspection of real music sheets has led us to decompose the problem into logical layers corresponding to the properties of the real images. Composition of all the layers then forms the final image.
-
-###Paper Texture Layer
-This layer defines the original paper quality as it had been introduced before the score was printed or written, i.e. without any further degradations.
-
-Properties:
-
- - **Color tint**
- - **Grain** (style, size)
- - **Impurities** (dark spots and fibers)
-
-### Ink Layer
-The ink layer defines different print and writing qualities including the ink color, density and diffusion. TODO: Printed (toner, density) vs. handwritten (distance transform, ink, pencil?); random pixel fluctuations (noise, Kanungo...), morphology, photocopy simulation, different blend modes...
-
-###Temporal Degradations
-   - soiling and dirting effects
-   - mírné zašpinění / změny v barvě listu
-   - ink color through the paper
-   - handwritten notes, underlinings, circles (pencil, pen, ...)
-   - splotches from liquids
-   - further paper degradations (grease, stained edges and page corners, molds, ...)
-
-###Digitisation Degradations
- - spatial deformations (rotation, book spine distance, crumpled paper)
- - PSF deformations (blurring, ...)
- - changes in contrast, brightness, exposition
+## Overview
+The idea behind this project is to automatically generate realistic images of 
+music sheets that could serve as a part of data augmentation for learning 
+of OMR algorithms. The term "realistic" here refers to "plausibly looking", 
+i.e. we do **not** try to **accurately simulate physical phenomena** such as 
+paper microstructure or ink diffusion. Rather, we target to use **procedural 
+modeling** to achieve realistic results. There are no rules how the parameters
+should be set up, simply tune them on a small excerpt to see which combination
+matches your expectations.
 
 
+## Basic Usage
+Current version requires binary image of a music score and a sample of
+background texture as input. For description and list of parameters please
+see help of the particular scripts.
+
+### Background Generation
+```bash
+python main_generate_background.py --input ./imgs/samples/lq02.png --width 1241 --height 756 --output ./imgs/examples/background.png
+
+```
+
+### Printed Sheet Synthesis
+```bash
+python main_synthesize_sheet.py --sheet ./imgs/debussy.png --background ./imgs/examples/background.png --output ./imgs/examples/synthesized.png --level 0.6 --blur 1 --leak 0.95 --density 0.3 --outline 0.3 --darkness 1.4
+
+```
+
+![Generated Sheet](./imgs/examples/synthesized.png)
 
  
 
